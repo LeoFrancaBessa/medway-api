@@ -31,6 +31,10 @@ API desenvolvida em Django Rest Framework para submissão e consulta de resultad
    ```docker compose up --build```
    Isso deve inicializá-lo na porta 8000
 
+3. Use o ```python manage.py createsuperuser``` para criar um usuário e logar ```http://localhost:8000/admin```
+
+3. Com o painel do admin, sinta-se livre para criar usuários(students), exames, questões e respostas para testar a API.
+
 ## Exemplos de uso
 
 ### Criar submissão de exame
@@ -40,10 +44,10 @@ POST /exam_submission/
 
 {
   "student_id": 1,
-  "exam_id": 5,
+  "exam_id": 1,
   "answers": [
-    {"question_id": 10, "answer_id": 55},
-    {"question_id": 11, "answer_id": 61}
+    {"question_id": 1, "answer_id": 1},
+    {"question_id": 2, "answer_id": 3}
   ]
 }
 ```
