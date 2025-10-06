@@ -25,3 +25,4 @@ RUN useradd usertest -m -s /bin/bash && chown -R usertest /home/usertest
 EXPOSE 8000
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+ 
