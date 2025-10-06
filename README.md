@@ -39,9 +39,11 @@ API desenvolvida em Django Rest Framework para submissão e consulta de resultad
 
 ### Criar submissão de exame
 
-```json
+```
 POST /exam_submission/
+```
 
+```json
 {
   "student_id": 1,
   "exam_id": 1,
