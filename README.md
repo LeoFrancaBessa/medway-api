@@ -39,7 +39,7 @@ API desenvolvida em Django Rest Framework para submissão e consulta de resultad
 
 ### Criar submissão de exame
 
-```
+```json
 POST /exam_submission/
 
 {
