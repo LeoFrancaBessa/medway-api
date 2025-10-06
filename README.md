@@ -1,24 +1,82 @@
-### Projeto Medway
+# Desafio Medway - Backend
 
-Aqui nesse repositório temos um projeto Django básico, já configurado para uso.
+API desenvolvida em Django Rest Framework para submissão e consulta de resultados de exames.
 
-Para rodar o projeto, deve-se ter o docker e ligado instalado no computador.
+## Funcionalidades
 
-Para configurár o projeto, pode-se rodar o comando:
+* **Criar submissão de exame (POST)**
+  Recebe todas as respostas de um estudante para um exame, armazena no banco e calcula o número de acertos.
 
-`docker compose up --build`.
+* **Consultar resultado do exame (GET)**
+  Retorna o desempenho do estudante em um exame, incluindo total de questões, acertos, percentual e detalhamento das respostas.
 
-Isso deve inicializá-lo na porta 8000.
+## Estrutura do projeto
 
-Ele já vai vir com alguns modelos, alguns inclusives já populados com dados de teste, 
-para facilitar o desenvolvimento.
+* `models.py` → Modelos principais (`ExamSubmission`, `ExamSubmissionAnswers`).
+* `serializers/` → Validação de input.
+* `services/` → Regras de negócio.
+* `views.py` → Endpoints da API.
 
-Com o projeto rodando, para acessar o container do docker, pode-se abrir outro terminal e rodar:
+## Como rodar
 
-`docker exec -it medway-api bash`
+1. Clone o repositório e instale as dependências:
 
-Uma vez dentro do container, pode-se criar um usuário/estudante com o comando:
+   ```bash
+   git clone <repo-url>
+   cd <repo>
+   pip install -r requirements.txt
+   ```
+2. Com o docker instalado, rode:
+   
+   ```docker compose up --build```
+   Isso deve inicializá-lo na porta 8000
 
-`python manage.py createsuperuser`
+## Exemplos de uso
 
-E utilizar essas credenciais para acessar o admin em http://0.0.0.0:8000/admin/.
+### Criar submissão de exame
+
+```
+POST /exam_submission/
+
+{
+  "student_id": 1,
+  "exam_id": 5,
+  "answers": [
+    {"question_id": 10, "answer_id": 55},
+    {"question_id": 11, "answer_id": 61}
+  ]
+}
+```
+
+### Consultar resultado
+
+```
+GET /exam_submission/?student_id=1&exam_id=5
+```
+
+Resposta:
+
+```json
+{
+  "submission_id": 7,
+  "raw_score": 1,
+  "total_questions": 2,
+  "percentage": 50.0,
+  "answers": [
+    {
+      "question_id": 10,
+      "question_text": "Qual a capital da França?",
+      "selected_answer_id": 55,
+      "selected_answer_text": "Paris",
+      "is_correct": true
+    }
+  ]
+}
+```
+
+## Melhorias futuras
+
+* Adicionar autenticação e permissões.
+* Implementar cache em cenários de maior escala.
+* Evoluir a camada de serviços para uma arquitetura mais próxima de Clean Architecture.
+* Criar histórico de revisões de notas para lidar com mudanças de gabarito.
